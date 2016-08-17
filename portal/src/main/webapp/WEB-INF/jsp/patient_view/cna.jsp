@@ -231,7 +231,11 @@
                                 }
 
                                 if (cnas.colExists('oncokb')) {
-                                    datum.oncokb = cnas.getValue(source[0], 'oncokb');
+                                    if(table_id === 'cna_summary_table'){
+                                        datum.oncokb = cnas.getValueInSummary(source[0], 'oncokb');
+                                    }else{
+                                        datum.oncokb = cnas.getValue(source[0], 'oncokb');
+                                    }
                                 }
                                 return datum;
                             } else {

@@ -271,7 +271,11 @@
                                 }
 
                                 if (mutations.colExists('oncokb')) {
-                                    datum.oncokb = mutations.getValue(source[0], 'oncokb');
+                                    if(table_id === 'mutation_summary_table'){
+                                        datum.oncokb = mutations.getValueInSummary(source[0], 'oncokb');
+                                    }else{
+                                        datum.oncokb = mutations.getValue(source[0], 'oncokb');
+                                    }
                                 }
                                 return datum;
                             } else {
