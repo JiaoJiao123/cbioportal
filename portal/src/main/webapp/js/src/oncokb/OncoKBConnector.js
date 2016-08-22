@@ -392,31 +392,55 @@ var OncoKB = (function(_, $) {
                 }
             }
             if (category === 'mycancergenome') {
-                if (!x.mutation || !x.mutation.myCancerGenome || x.mutation.myCancerGenome.length === 0) {
-                    if (!y.mutation || !y.mutation.myCancerGenome || y.mutation.myCancerGenome.length === 0) {
+                if (!hasMyCancerGenomeInfo(x.mutation)) {
+                    if (!hasMyCancerGenomeInfo(y.mutation)) {
                         return 0;
                     }
                     return yWeight;
                 }
-                if (!y.mutation || !y.mutation.myCancerGenome || y.mutation.myCancerGenome.length === 0) {
+                if (!hasMyCancerGenomeInfo(y.mutation)) {
                     return xWeight;
                 }
                 return 0;
             }
             if (category === 'hotspot') {
-                if (!x.mutation || !x.mutation.hasOwnProperty('isHotspot') || !x.mutation.isHotspot) {
-                    if (!y.mutation || !y.mutation.hasOwnProperty('isHotspot') || !y.mutation.isHotspot) {
+                if (!isHotspot(x.mutation)) {
+                    if (!isHotspot(y.mutation)) {
                         return 0;
                     }
                     return yWeight;
                 }
-                if (!y.mutation || !y.mutation.hasOwnProperty('isHotspot') || !y.mutation.isHotspot) {
+                if (!isHotspot(y.mutation)) {
                     return xWeight;
                 }
                 return 0;
             }
         }
 
+        function hasMyCancerGenomeInfo(mutation) {
+            try {
+                if(mutation.attributes.myCancerGenome.length > 0) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }catch (e){
+                return false;
+            }
+        }
+
+        function isHotspot(mutation) {
+            try {
+                if(mutation.attributes.isHotspot) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }catch (e){
+                return false;
+            }
+        }
+        
         function processEvidence(evidences) {
             var result = {}; //id based.
             if (evidences && evidences.length > 0) {
