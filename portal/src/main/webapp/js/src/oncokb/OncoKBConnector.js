@@ -859,6 +859,9 @@ OncoKB.Instance.prototype = {
             contentType: 'application/json',
             data: JSON.stringify(oncokbServiceData)
         }).done(function(d1) {
+            if(_.isString(d1)) {
+                d1 = $.parseJSON(d1);
+            }
             if (d1 && d1.length > 0) {
                 d1.forEach(function(record) {
                     var id = record.query.id;
@@ -943,6 +946,9 @@ OncoKB.Instance.prototype = {
                 data: JSON.stringify(oncokbServiceData)
             })
                 .done(function(d1) {
+                    if(_.isString(d1)) {
+                        d1 = $.parseJSON(d1);
+                    }
                     var result = OncoKB.utils.processEvidence(d1);
                     _.each(result, function(item, index) {
                         self.variants[index].evidence.gene = item.gene;
@@ -1003,6 +1009,9 @@ OncoKB.Instance.prototype = {
                 data: JSON.stringify(oncokbSummaryData)
             })
                 .done(function(d) {
+                    if(_.isString(d)) {
+                        d = $.parseJSON(d);
+                    }
                     var data = _.isArray(d) && _.isObject(d[0]) ? d[0] : null;
                     if (data && data.summary) {
                         if (data.id) {
@@ -1041,6 +1050,7 @@ OncoKB.Instance.prototype = {
             if (typeof  type === 'undefined' || type === 'gene') {
                 $(target).find('.oncokb_gene').each(function() {
                     var oncokbId = $(this).attr('oncokbId');
+                    if(_.isObject(self.variants[oncokbId])) {
                     var gene = self.variants[oncokbId].evidence.gene;
                     var hasGene = self.variants[oncokbId].hasGene;
                     var _tip = '';
@@ -1088,6 +1098,7 @@ OncoKB.Instance.prototype = {
                                 }
                             });
                         });
+                    }
                     }
                 });
             }

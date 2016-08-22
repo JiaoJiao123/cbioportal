@@ -170,15 +170,6 @@ GenomicEventContainer.prototype = {
     getValue: function(eventId,colName) {
         return this.data[colName][this.eventIdMap[eventId]];
     },
-    getValueInSummary: function(eventId,colName) {
-        var data = this.data[colName];
-        for(var i = 0;i < data.length;i++){
-            if(data[i].id === eventId.toString()){
-                return data[i];
-            }
-        }
-        return "";
-    },
     colExists: function(colName) {
         return this.data[colName]!=null;
     },
